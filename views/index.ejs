@@ -1,26 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <title>Haikus for Mona</title>
+    <title>ポモドーロタイマー</title>
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="Haikus for Mona">
-    <meta property="og:description" content="Some of the best haikus you'll ever read about our rescue dog June">
-    <meta property="og:image" content="/images/sunlight.jpg">
+    <meta property="og:title" content="ポモドーロタイマー">
+    <meta property="og:description" content="視覚的フィードバックで集中を支えるポモドーロタイマー">
   </head>
   <body>
-    <h1>Haikus for Mona</h1>
-    <div>
-      <% for(var i=0; i < haikus.length; i++) { %>
-        <img
-          class="mona-images"
-          src="images/<%= haikus[i].image %>" />
-        <div 
-          class="haiku-containers">
-          <p 
-            class="haikus"
-          ><%- haikus[i].text %></p>
-        </div>
-      <% } %>
+    <div class="ambient-stage" aria-hidden="true">
+      <div class="ambient-glow"></div>
+      <div class="ambient-ripple ambient-ripple--one"></div>
+      <div class="ambient-ripple ambient-ripple--two"></div>
+      <div class="ambient-particles"></div>
     </div>
+
+    <main class="pomodoro-app">
+      <header class="hero">
+        <p class="eyebrow">Focus Lab</p>
+        <h1>ポモドーロタイマー</h1>
+        <p class="hero-copy">
+          円形プログレスと背景アニメーションで、集中のリズムを直感的に保ちます。
+        </p>
+      </header>
+
+      <section class="timer-card">
+        <div
+          class="progress-ring"
+          data-progress-ring
+          role="img"
+          aria-label="残り時間の進行状況"
+        >
+          <div class="progress-ring__inner">
+            <span class="mode-label" data-mode-label>集中時間</span>
+            <time class="time-display" data-time-display aria-live="polite">25:00</time>
+            <span class="status-label" data-status-label>開始準備完了</span>
+          </div>
+        </div>
+
+        <div class="mode-switcher" role="tablist" aria-label="タイマーモード">
+          <button class="mode-button is-active" data-mode="focus" type="button">集中 25分</button>
+          <button class="mode-button" data-mode="break" type="button">休憩 5分</button>
+        </div>
+
+        <div class="control-row">
+          <button class="primary-button" data-action="start" type="button">開始</button>
+          <button class="secondary-button" data-action="pause" type="button">一時停止</button>
+          <button class="secondary-button" data-action="reset" type="button">リセット</button>
+        </div>
+      </section>
+
+      <section class="settings-card" aria-label="視覚フィードバック設定">
+        <h2>視覚フィードバック</h2>
+        <label class="setting-item">
+          <input data-setting="smoothAnimation" type="checkbox" checked>
+          <span>円形プログレスを滑らかに減少させる</span>
+        </label>
+        <label class="setting-item">
+          <input data-setting="dynamicColor" type="checkbox" checked>
+          <span>プログレスバー色を青→黄→赤に変化させる</span>
+        </label>
+        <label class="setting-item">
+          <input data-setting="ambientEffect" type="checkbox" checked>
+          <span>集中時間中の背景エフェクトを有効にする</span>
+        </label>
+      </section>
+    </main>
+
+    <script src="/js/pomodoro.js"></script>
+  </body>
 </html>
