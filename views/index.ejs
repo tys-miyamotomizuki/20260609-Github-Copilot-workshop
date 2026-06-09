@@ -1,70 +1,81 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="dark">
   <head>
     <meta charset="UTF-8">
     <title>ポモドーロタイマー</title>
+    <script>
+      (function () {
+        try {
+          const stored = JSON.parse(localStorage.getItem('pomodoro-settings'));
+          const theme = stored && stored.theme;
+          if (['dark', 'light', 'focus'].includes(theme)) {
+            document.documentElement.dataset.theme = theme;
+          }
+        } catch (error) {}
+      })();
+    </script>
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:title" content="ポモドーロタイマー">
-    <meta property="og:description" content="視覚的フィードバックで集中を支えるポモドーロタイマー">
+    <meta property="og:description" content="カスタマイズ設定と達成状況を保存できるポモドーロタイマー">
   </head>
   <body>
-    <div class="ambient-stage" aria-hidden="true">
-      <div class="ambient-glow"></div>
-      <div class="ambient-ripple ambient-ripple--one"></div>
-      <div class="ambient-ripple ambient-ripple--two"></div>
-      <div class="ambient-particles"></div>
-    </div>
-
-    <main class="pomodoro-app">
-      <header class="hero">
-        <p class="eyebrow">Focus Lab</p>
-        <h1>ポモドーロタイマー</h1>
-        <p class="hero-copy">
-          円形プログレスと背景アニメーションで、集中のリズムを直感的に保ちます。
-        </p>
-      </header>
-
+    <main class="app-shell">
       <section class="timer-card">
-        <div
-          class="progress-ring"
-          data-progress-ring
-          role="img"
-          aria-label="残り時間の進行状況"
-        >
-          <div class="progress-ring__inner">
-            <span class="mode-label" data-mode-label>集中時間</span>
-            <time class="time-display" data-time-display aria-live="polite">25:00</time>
-            <span class="status-label" data-status-label>開始準備完了</span>
-          </div>
-        </div>
-
-        <div class="mode-switcher" role="group" aria-label="タイマーモード">
-          <button class="mode-button is-active" data-mode="focus" type="button">集中 25分</button>
-          <button class="mode-button" data-mode="break" type="button">休憩 5分</button>
-        </div>
-
-        <div class="control-row">
-          <button class="primary-button" data-action="start" type="button">開始</button>
-          <button class="secondary-button" data-action="pause" type="button">一時停止</button>
-          <button class="secondary-button" data-action="reset" type="button">リセット</button>
+        <p class="eyebrow">Customizable productivity timer</p>
+        <h1>ポモドーロタイマー</h1>
+        <p id="session-label" class="session-label">集中セッション</p>
+        <p id="timer-display" class="timer-display" aria-live="polite">25:00</p>
+        <p id="status-text" class="status-text">好みに合わせて設定し、開始ボタンでセッションを始めましょう。</p>
+        <div class="timer-actions">
+          <button id="start-pause-button" type="button">開始</button>
+          <button id="reset-button" type="button" class="secondary-button">リセット</button>
+          <button id="skip-button" type="button" class="secondary-button">スキップ</button>
         </div>
       </section>
 
-      <section class="settings-card" aria-label="視覚フィードバック設定">
-        <h2>視覚フィードバック</h2>
-        <label class="setting-item">
-          <input data-setting="smoothAnimation" type="checkbox" checked>
-          <span>円形プログレスを滑らかに減少させる</span>
-        </label>
-        <label class="setting-item">
-          <input data-setting="dynamicColor" type="checkbox" checked>
-          <span>プログレスバー色を青→黄→赤に変化させる</span>
-        </label>
-        <label class="setting-item">
-          <input data-setting="ambientEffect" type="checkbox" checked>
-          <span>集中時間中の背景エフェクトを有効にする</span>
-        </label>
+      <section class="settings-card" aria-labelledby="settings-heading">
+        <div class="settings-header">
+          <h2 id="settings-heading">設定</h2>
+          <p>各設定はブラウザーに保存されます。</p>
+        </div>
+
+        <div class="settings-grid">
+          <label class="setting-field">
+            <span>集中時間</span>
+            <select id="focus-duration" aria-label="集中時間">
+              <option value="15">15分</option>
+              <option value="25">25分</option>
+              <option value="35">35分</option>
+              <option value="45">45分</option>
+            </select>
+          </label>
+
+          <label class="setting-field">
+            <span>休憩時間</span>
+            <select id="break-duration" aria-label="休憩時間">
+              <option value="5">5分</option>
+              <option value="10">10分</option>
+              <option value="15">15分</option>
+            </select>
+          </label>
+
+          <label class="setting-field">
+            <span>テーマ</span>
+            <select id="theme-select" aria-label="テーマ">
+              <option value="dark">ダーク</option>
+              <option value="light">ライト</option>
+              <option value="focus">フォーカス</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset class="sound-settings">
+          <legend>サウンド</legend>
+          <label><input id="sound-start" type="checkbox"> 開始音</label>
+          <label><input id="sound-end" type="checkbox"> 終了音</label>
+          <label><input id="sound-tick" type="checkbox"> tick音</label>
+        </fieldset>
       </section>
 
       <section class="dashboard card metrics">
@@ -86,8 +97,8 @@
       <section class="dashboard card">
         <h2>タイマー完了を記録</h2>
         <form method="post" action="/timer/complete" class="complete-form">
-          <label for="focusMinutes">集中時間（分）</label>
-          <input id="focusMinutes" name="focusMinutes" type="number" min="1" max="60" value="25">
+          <input id="focus-minutes-input" name="focusMinutes" type="hidden" value="25">
+          <p class="complete-form-copy">現在の集中時間設定でセッション完了を記録します。</p>
           <button type="submit">+ セッション完了</button>
         </form>
       </section>
@@ -103,7 +114,7 @@
 
       <section class="dashboard card">
         <h2>週間詳細統計</h2>
-        <p>完了率: <%= dashboard.weeklyStats.summary.completionRate %>% / 平均集中時間: <%= dashboard.weeklyStats.summary.avgFocusMinutes %>分</p>
+        <p class="subtle">完了率: <%= dashboard.weeklyStats.summary.completionRate %>% / 平均集中時間: <%= dashboard.weeklyStats.summary.avgFocusMinutes %>分</p>
         <ul class="graph-list">
           <% dashboard.weeklyStats.items.forEach((item) => { %>
             <li>
@@ -117,7 +128,7 @@
 
       <section class="dashboard card">
         <h2>月間詳細統計</h2>
-        <p>完了率: <%= dashboard.monthlyStats.summary.completionRate %>% / 平均集中時間: <%= dashboard.monthlyStats.summary.avgFocusMinutes %>分</p>
+        <p class="subtle">完了率: <%= dashboard.monthlyStats.summary.completionRate %>% / 平均集中時間: <%= dashboard.monthlyStats.summary.avgFocusMinutes %>分</p>
         <ul class="graph-list">
           <% dashboard.monthlyStats.items.forEach((item) => { %>
             <li>
@@ -130,6 +141,6 @@
       </section>
     </main>
 
-    <script src="/js/pomodoro.js"></script>
+    <script src="/js/app.js"></script>
   </body>
 </html>
