@@ -64,7 +64,21 @@ document.addEventListener("visibilitychange", () => {
 function initializeState() {
   const currentTime = now();
   const storedState = loadState();
-  let nextState = storedState ? { ...createInitialState(), ...storedState } : createInitialState();
+  const baseState = createInitialState();
+  const safeStoredState = storedState && typeof storedState === "object" ? storedState : {};
+  const durations = { ...baseState.durations, ...(safeStoredState.durations || {}) };
+  const mode = durations[safeStoredState.mode] ? safeStoredState.mode : baseState.mode;
+
+  let nextState = {
+    ...baseState,
+    ...safeStoredState,
+    durations,
+    mode,
+    remainingSeconds: Number.isFinite(safeStoredState.remainingSeconds)
+      ? safeStoredState.remainingSeconds
+      : durations[mode],
+    endAt: Number.isFinite(safeStoredState.endAt) ? safeStoredState.endAt : null,
+  };
 
   nextState = syncStatsForToday(nextState, getTodayDate(currentTime));
   nextState = computeCurrentState(nextState, currentTime);
