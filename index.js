@@ -18,9 +18,14 @@ app.post('/timer/complete', (req, res) => {
   timerSessions.push({
     completedAt: new Date().toISOString(),
     plannedMinutes: focusMinutes,
-    focusMinutes: focusMinutes,
+    focusMinutes,
     completed: true
   });
+
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 30);
+  const recentSessions = timerSessions.filter((session) => new Date(session.completedAt) >= cutoff);
+  timerSessions.splice(0, timerSessions.length, ...recentSessions);
 
   res.redirect('/');
 });
