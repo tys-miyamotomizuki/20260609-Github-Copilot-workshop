@@ -58,7 +58,11 @@
   }
 
   function saveSettings() {
-    localStorage.setItem(storageKey, JSON.stringify(settings));
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(settings));
+    } catch (error) {
+      // Persistence is best-effort; ignore write failures (quota/blocked storage).
+    }
   }
 
   function getSessionDuration() {
