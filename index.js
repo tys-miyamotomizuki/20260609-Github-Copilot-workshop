@@ -1,6 +1,6 @@
 let express = require('express');
 let app = express();
-let ejs = require('ejs');
+require('ejs');
 const { createDashboard } = require('./lib/gamification');
 const port = process.env.PORT || 3000;
 
