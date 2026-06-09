@@ -18,6 +18,7 @@
     statusText: document.getElementById('status-text'),
     focusDuration: document.getElementById('focus-duration'),
     breakDuration: document.getElementById('break-duration'),
+    focusMinutesInput: document.getElementById('focus-minutes-input'),
     themeSelect: document.getElementById('theme-select'),
     soundStart: document.getElementById('sound-start'),
     soundEnd: document.getElementById('sound-end'),
@@ -93,6 +94,9 @@
   function syncControls() {
     elements.focusDuration.value = String(settings.focusDuration);
     elements.breakDuration.value = String(settings.breakDuration);
+    if (elements.focusMinutesInput) {
+      elements.focusMinutesInput.value = String(settings.focusDuration);
+    }
     elements.themeSelect.value = settings.theme;
     elements.soundStart.checked = settings.sounds.start;
     elements.soundEnd.checked = settings.sounds.end;
@@ -190,6 +194,9 @@
 
   function updateSetting(key, value) {
     settings[key] = value;
+    if (key === 'focusDuration' && elements.focusMinutesInput) {
+      elements.focusMinutesInput.value = String(value);
+    }
     saveSettings();
     updateTheme();
     resetTimer(true);

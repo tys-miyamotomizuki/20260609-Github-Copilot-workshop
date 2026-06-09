@@ -6,14 +6,19 @@
     "license": "MIT",
     "author": "Microsoft",
     "scripts": {
-        "start": "node index.js",
-        "dev": "nodemon"
+        "start": "flask run --host 0.0.0.0 --port 5000",
+        "dev": "flask run --debug",
+        "test": "npm run test:js && npm run test:python",
+        "test:js": "vitest run tests/js && node --test test/gamification.test.js",
+        "test:python": "python -m unittest discover -s tests/python -p 'test_*.py'"
     },
     "dependencies": {
         "ejs": "^3.1.10",
         "express": "^4.22.1"
     },
     "devDependencies": {
-        "nodemon": "^2.0.19"
+        "jsdom": "^26.1.0",
+        "nodemon": "^2.0.19",
+        "vitest": "^3.2.6"
     }
 }
