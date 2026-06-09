@@ -1,26 +1,72 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Haikus for Mona</title>
+    <title>Pomodoro Timer</title>
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="Haikus for Mona">
-    <meta property="og:description" content="Some of the best haikus you'll ever read about our rescue dog June">
-    <meta property="og:image" content="/images/sunlight.jpg">
+    <meta property="og:title" content="Pomodoro Timer">
+    <meta property="og:description" content="A customizable pomodoro timer with saved preferences">
   </head>
-  <body>
-    <h1>Haikus for Mona</h1>
-    <div>
-      <% for(var i=0; i < haikus.length; i++) { %>
-        <img
-          class="mona-images"
-          src="images/<%= haikus[i].image %>" />
-        <div 
-          class="haiku-containers">
-          <p 
-            class="haikus"
-          ><%- haikus[i].text %></p>
+  <body data-theme="dark">
+    <main class="app-shell">
+      <section class="timer-card">
+        <p class="eyebrow">Customizable productivity timer</p>
+        <h1>Pomodoro Timer</h1>
+        <p id="session-label" class="session-label">集中セッション</p>
+        <p id="timer-display" class="timer-display" aria-live="polite">25:00</p>
+        <p id="status-text" class="status-text">好みに合わせて設定し、開始ボタンでセッションを始めましょう。</p>
+        <div class="timer-actions">
+          <button id="start-pause-button" type="button">開始</button>
+          <button id="reset-button" type="button" class="secondary-button">リセット</button>
+          <button id="skip-button" type="button" class="secondary-button">スキップ</button>
         </div>
-      <% } %>
-    </div>
+      </section>
+
+      <section class="settings-card" aria-labelledby="settings-heading">
+        <div class="settings-header">
+          <h2 id="settings-heading">設定</h2>
+          <p>各設定はブラウザーに保存されます。</p>
+        </div>
+
+        <div class="settings-grid">
+          <label class="setting-field">
+            <span>集中時間</span>
+            <select id="focus-duration" aria-label="集中時間">
+              <option value="15">15分</option>
+              <option value="25">25分</option>
+              <option value="35">35分</option>
+              <option value="45">45分</option>
+            </select>
+          </label>
+
+          <label class="setting-field">
+            <span>休憩時間</span>
+            <select id="break-duration" aria-label="休憩時間">
+              <option value="5">5分</option>
+              <option value="10">10分</option>
+              <option value="15">15分</option>
+            </select>
+          </label>
+
+          <label class="setting-field">
+            <span>テーマ</span>
+            <select id="theme-select" aria-label="テーマ">
+              <option value="dark">ダーク</option>
+              <option value="light">ライト</option>
+              <option value="focus">フォーカス</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset class="sound-settings">
+          <legend>サウンド</legend>
+          <label><input id="sound-start" type="checkbox"> 開始音</label>
+          <label><input id="sound-end" type="checkbox"> 終了音</label>
+          <label><input id="sound-tick" type="checkbox"> tick音</label>
+        </fieldset>
+      </section>
+    </main>
+
+    <script src="/js/app.js"></script>
+  </body>
 </html>
