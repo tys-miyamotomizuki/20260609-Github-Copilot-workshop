@@ -1,26 +1,76 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Haikus for Mona</title>
+    <title>ポモドーロダッシュボード</title>
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="Haikus for Mona">
-    <meta property="og:description" content="Some of the best haikus you'll ever read about our rescue dog June">
-    <meta property="og:image" content="/images/sunlight.jpg">
+    <meta property="og:title" content="ポモドーロダッシュボード">
+    <meta property="og:description" content="XP・レベル・バッジ・統計で継続を可視化">
   </head>
   <body>
-    <h1>Haikus for Mona</h1>
-    <div>
-      <% for(var i=0; i < haikus.length; i++) { %>
-        <img
-          class="mona-images"
-          src="images/<%= haikus[i].image %>" />
-        <div 
-          class="haiku-containers">
-          <p 
-            class="haikus"
-          ><%- haikus[i].text %></p>
+    <main class="dashboard">
+      <h1>ポモドーロタイマー ダッシュボード</h1>
+
+      <section class="card metrics">
+        <div>
+          <p class="label">レベル</p>
+          <p class="value">Lv <%= dashboard.level %></p>
         </div>
-      <% } %>
-    </div>
+        <div>
+          <p class="label">経験値（XP）</p>
+          <p class="value"><%= dashboard.xp %> XP</p>
+          <p class="subtle">次のレベルまで <%= dashboard.xpToNextLevel %> XP</p>
+        </div>
+        <div>
+          <p class="label">連続達成</p>
+          <p class="value"><%= dashboard.streakDays %> 日</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>タイマー完了を記録</h2>
+        <form method="post" action="/timer/complete" class="complete-form">
+          <label for="focusMinutes">集中時間（分）</label>
+          <input id="focusMinutes" name="focusMinutes" type="number" min="1" max="60" value="25">
+          <button type="submit">+ セッション完了</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>達成バッジ</h2>
+        <div class="badges">
+          <% dashboard.badges.forEach((badge) => { %>
+            <span class="badge <%= badge.unlocked ? 'unlocked' : 'locked' %>"><%= badge.name %></span>
+          <% }) %>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>週間詳細統計</h2>
+        <p>完了率: <%= dashboard.weeklyStats.summary.completionRate %>% / 平均集中時間: <%= dashboard.weeklyStats.summary.avgFocusMinutes %>分</p>
+        <ul class="graph-list">
+          <% dashboard.weeklyStats.items.forEach((item) => { %>
+            <li>
+              <span class="graph-label"><%= item.label %></span>
+              <div class="bar completion"><span style="width: <%= item.completionRate %>%"></span></div>
+              <span class="graph-value"><%= item.completionRate %>%</span>
+            </li>
+          <% }) %>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>月間詳細統計</h2>
+        <p>完了率: <%= dashboard.monthlyStats.summary.completionRate %>% / 平均集中時間: <%= dashboard.monthlyStats.summary.avgFocusMinutes %>分</p>
+        <ul class="graph-list">
+          <% dashboard.monthlyStats.items.forEach((item) => { %>
+            <li>
+              <span class="graph-label"><%= item.label %></span>
+              <div class="bar focus"><span style="width: <%= Math.min(100, Math.round((item.avgFocusMinutes / 60) * 100)) %>%"></span></div>
+              <span class="graph-value"><%= item.avgFocusMinutes %>分</span>
+            </li>
+          <% }) %>
+        </ul>
+      </section>
+    </main>
 </html>

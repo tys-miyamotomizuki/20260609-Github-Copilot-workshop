@@ -1,36 +1,128 @@
 body {
-    background-color: #2a2b2f; 
-    display: flex; 
-    flex-direction: column;
-    justify-content: center; 
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    background-color: #181a20;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
     color: #fff;
-    text-align:center;
+    margin: 0;
 }
 
-.mona-images {
-    max-width: 400px;
-    max-height: 400px;
-    border: 8px solid #fff;
+.dashboard {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
 }
 
-.haiku-containers {
-    padding: 10px 0px 20px 0px;
+h1, h2 {
+    margin: 0 0 12px;
 }
 
-.haikus {
-    font-size: 18px;
-    white-space: pre-wrap;
+.card {
+    background: #242834;
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 16px;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.25);
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.label {
+    color: #9da5bd;
+    margin: 0;
+}
+
+.value {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 8px 0 0;
+}
+
+.subtle {
+    color: #b8c0d9;
+}
+
+.complete-form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+input,
+button {
+    border-radius: 8px;
+    border: 0;
+    padding: 8px 10px;
+}
+
+button {
+    background: #47a4ff;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.badge {
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+.badge.unlocked {
+    background: #2f7d4d;
+}
+
+.badge.locked {
+    background: #555e76;
+}
+
+.graph-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.graph-list li {
+    display: grid;
+    grid-template-columns: 70px 1fr 56px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.bar {
+    background: #11131a;
+    border-radius: 999px;
+    height: 12px;
+    overflow: hidden;
+}
+
+.bar span {
+    display: block;
+    height: 100%;
+}
+
+.bar.completion span {
+    background: #47a4ff;
+}
+
+.bar.focus span {
+    background: #ff9966;
 }
 
 @media only screen and (max-width: 600px) {
-    .june-images {
-        max-width: 340px;
-        max-height: 340px;
-    }
-
-    .haikus {
-        font-size: 22px;
+    .graph-list li {
+        grid-template-columns: 54px 1fr 40px;
+        gap: 6px;
     }
 }
