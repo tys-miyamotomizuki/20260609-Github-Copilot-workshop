@@ -7,13 +7,18 @@
     "author": "Microsoft",
     "scripts": {
         "start": "node index.js",
-        "dev": "nodemon"
+        "dev": "nodemon",
+        "test": "npm run test:js && npm run test:python",
+        "test:js": "vitest run",
+        "test:python": ".venv/bin/python -m unittest discover -s tests/python -p 'test_*.py'"
     },
     "dependencies": {
         "ejs": "^3.1.10",
         "express": "^4.22.1"
     },
     "devDependencies": {
-        "nodemon": "^2.0.19"
+        "jsdom": "^26.1.0",
+        "nodemon": "^2.0.19",
+        "vitest": "^2.1.8"
     }
 }
