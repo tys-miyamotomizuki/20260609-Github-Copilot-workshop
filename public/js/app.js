@@ -106,7 +106,9 @@
       audioContext = new AudioContextClass();
     }
     if (audioContext.state === 'suspended') {
-      audioContext.resume();
+      audioContext.resume().catch(() => {
+        // Ignore resume failures (e.g., browser autoplay / background restrictions).
+      });
     }
     return audioContext;
   }
