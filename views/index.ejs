@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="dark">
   <head>
     <title>Pomodoro Timer</title>
+    <script>
+      (function () {
+        try {
+          const stored = JSON.parse(localStorage.getItem('pomodoro-settings'));
+          const theme = stored && stored.theme;
+          if (['dark', 'light', 'focus'].includes(theme)) {
+            document.documentElement.dataset.theme = theme;
+          }
+        } catch (error) {}
+      })();
+    </script>
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:title" content="Pomodoro Timer">
     <meta property="og:description" content="A customizable pomodoro timer with saved preferences">
   </head>
-  <body data-theme="dark">
+  <body>
     <main class="app-shell">
       <section class="timer-card">
         <p class="eyebrow">Customizable productivity timer</p>

@@ -12,7 +12,7 @@
   };
 
   const elements = {
-    body: document.body,
+    root: document.documentElement,
     sessionLabel: document.getElementById('session-label'),
     timerDisplay: document.getElementById('timer-display'),
     statusText: document.getElementById('status-text'),
@@ -76,7 +76,7 @@
   }
 
   function updateTheme() {
-    elements.body.dataset.theme = settings.theme;
+    elements.root.dataset.theme = settings.theme;
   }
 
   function updateDisplay() {

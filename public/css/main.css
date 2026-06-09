@@ -11,7 +11,7 @@
     --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
 }
 
-body[data-theme="light"] {
+html[data-theme="light"] {
     color-scheme: light;
     --background: #f4f7fb;
     --surface: #ffffff;
@@ -24,7 +24,7 @@ body[data-theme="light"] {
     --shadow: 0 24px 60px rgba(51, 75, 120, 0.12);
 }
 
-body[data-theme="focus"] {
+html[data-theme="focus"] {
     --background: #090b10;
     --surface: #11151d;
     --surface-strong: #1b2230;
