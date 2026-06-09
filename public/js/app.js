@@ -172,7 +172,7 @@
     updateDisplay();
     intervalId = window.setInterval(() => {
       remainingSeconds -= 1;
-      if (settings.sounds.tick && remainingSeconds > 0) {
+      if (!document.hidden && settings.sounds.tick && remainingSeconds > 0) {
         playTone('tick');
       }
       if (remainingSeconds <= 0) {
