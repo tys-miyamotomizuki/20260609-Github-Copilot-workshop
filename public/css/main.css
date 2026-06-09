@@ -286,6 +286,26 @@ body.effects-enabled.focus-active .ambient-stage {
     }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    button {
+        transition: none;
+    }
+
+    button:hover {
+        transform: none;
+    }
+
+    .ambient-glow,
+    .ambient-ripple,
+    .ambient-particles {
+        animation: none;
+    }
+
+    .ambient-stage {
+        transition: none;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     body {
         padding: 20px 12px;
