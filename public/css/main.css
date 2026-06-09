@@ -331,3 +331,111 @@ body.effects-enabled.focus-active .ambient-stage {
         width: 100%;
     }
 }
+
+.dashboard {
+    width: 100%;
+}
+
+.card {
+    background: rgba(15, 23, 42, 0.78);
+    border: 1px solid var(--card-border);
+    border-radius: 28px;
+    padding: 24px;
+    box-shadow: 0 24px 80px rgba(15, 23, 42, 0.35);
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.label {
+    color: #9da5bd;
+    margin: 0;
+}
+
+.value {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 8px 0 0;
+}
+
+.subtle {
+    color: #b8c0d9;
+}
+
+.complete-form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.complete-form input {
+    border-radius: 8px;
+    border: 0;
+    padding: 8px 10px;
+}
+
+.complete-form button {
+    border-radius: 8px;
+    padding: 8px 10px;
+    box-shadow: none;
+    color: #fff;
+    background: #47a4ff;
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.badge {
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+.badge.unlocked {
+    background: #2f7d4d;
+}
+
+.badge.locked {
+    background: #555e76;
+}
+
+.graph-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.graph-list li {
+    display: grid;
+    grid-template-columns: 70px 1fr 56px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.bar {
+    background: #11131a;
+    border-radius: 999px;
+    height: 12px;
+    overflow: hidden;
+}
+
+.bar span {
+    display: block;
+    height: 100%;
+}
+
+.bar.completion span {
+    background: #47a4ff;
+}
+
+.bar.focus span {
+    background: #ff9966;
+}
