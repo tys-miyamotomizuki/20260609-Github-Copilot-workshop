@@ -6,8 +6,8 @@
     "license": "MIT",
     "author": "Microsoft",
     "scripts": {
-        "start": "node index.js",
-        "dev": "nodemon",
+        "start": "flask run --host 0.0.0.0 --port 5000",
+        "dev": "flask run --debug",
         "test": "npm run test:js && npm run test:python",
         "test:js": "vitest run",
         "test:python": "python -m unittest discover -s tests/python -p 'test_*.py'"
